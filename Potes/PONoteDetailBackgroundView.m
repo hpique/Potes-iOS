@@ -34,7 +34,7 @@ NSInteger const kPONoteDetailBackgroundViewMarginTop = 42;
 	int lines = 1 + self.frame.size.height / PONoteDetailBackgroundViewLineHeight;
 	for (int i = 0; i < lines;  ++i) {
 		CGContextMoveToPoint(context, 0.0, PONoteDetailBackgroundViewLineHeight * i + kPONoteDetailBackgroundViewMarginTop);
-		CGContextAddLineToPoint(context, 320.0, PONoteDetailBackgroundViewLineHeight * i + kPONoteDetailBackgroundViewMarginTop);
+		CGContextAddLineToPoint(context, self.frame.size.width, PONoteDetailBackgroundViewLineHeight * i + kPONoteDetailBackgroundViewMarginTop);
 		CGContextStrokePath(context);
 	}
     

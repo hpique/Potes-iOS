@@ -10,7 +10,7 @@
 @class PONote;
 @class PONoteDetailBackgroundView;
 
-@interface PONoteDetailViewController : UIViewController<UITextViewDelegate, UIScrollViewDelegate>
+@interface PONoteDetailViewController : UIViewController<UITextViewDelegate, UIScrollViewDelegate, UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) NSArray* allNotes;
 @property (strong, nonatomic) PONote* note;

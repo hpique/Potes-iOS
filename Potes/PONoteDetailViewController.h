@@ -18,8 +18,11 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
+- (IBAction) addButtonPressed;
 - (IBAction) doneButtonPressed;
 - (IBAction) swipeLeft;
 - (IBAction) swipeRight;
+
+- (void) reloadData;
 
 @end

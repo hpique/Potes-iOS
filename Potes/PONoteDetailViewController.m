@@ -9,6 +9,12 @@
 #import "PONoteDetailViewController.h"
 #import "PONotesManager.h"
 
+@interface PONoteDetailViewController (Private)
+
+- (void) changeNoteWithTransition:(UIViewAnimationTransition)transition;
+
+@end
+
 @implementation PONoteDetailViewController
 
 @synthesize allNotes;
@@ -22,17 +28,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -43,15 +40,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
-    if (self.note) {
-        self.title = self.note.title;
-        self.textView.text = self.note.body;
-        self.note.views++;
-        self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
-    } else {
-        self.title = NSLocalizedString(@"New Note", @"");
+    if (!self.note) {
         [self.textView becomeFirstResponder];
     }
+    
+    [self reloadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -63,6 +56,7 @@
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setTextView:nil];
     [self setDoneBarButtonItem:nil];
     [self setAddBarButtonItem:nil];
@@ -76,16 +70,37 @@
 
 #pragma mark - Actions
 
+- (IBAction) addButtonPressed {
+    self.note = nil;
+    [self changeNoteWithTransition:UIViewAnimationTransitionCurlUp];
+}
+
+- (void) changeNoteAnimationDidStop {
+    if (!self.note) {
+        [self.textView becomeFirstResponder];
+    }
+}
+
 - (IBAction) doneButtonPressed {
     [self.view endEditing:YES];
 }
 
 - (IBAction) swipeLeft {
-    
+    int nextIndex = self.noteIndex + 1;
+    if (nextIndex < self.allNotes.count) {
+        self.note = [self.allNotes objectAtIndex:nextIndex];
+        self.noteIndex = nextIndex;
+        [self changeNoteWithTransition:UIViewAnimationTransitionCurlUp];
+    }
 }
 
 - (IBAction) swipeRight {
-    
+    int nextIndex = self.noteIndex - 1;
+    if (nextIndex >= 0) {
+        self.note = [self.allNotes objectAtIndex:nextIndex];
+        self.noteIndex = nextIndex;
+        [self changeNoteWithTransition:UIViewAnimationTransitionCurlDown];
+    }
 }
 
 - (void) keyboardWillShow:(NSNotification*)aNotification{
@@ -135,12 +150,39 @@
         self.note.modificationDate = [NSDate date];
     }
     self.note.body = self.textView.text;
+    
     self.title = self.note.title;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)aTextView {
     [PONotesManager update];
     self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
+}
+
+#pragma mark - Private
+
+- (void) changeNoteWithTransition:(UIViewAnimationTransition)transition {
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0];
+    [UIView setAnimationTransition:transition forView:self.view cache:YES];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(changeNoteAnimationDidStop)];
+    [self reloadData];
+    [UIView commitAnimations];
+}
+
+#pragma mark - Public 
+
+- (void) reloadData {
+    if (self.note) {
+        self.title = self.note.title;
+        self.textView.text = self.note.body;
+        self.note.views++;
+    } else {
+        self.title = NSLocalizedString(@"New Note", @"");
+        self.textView.text = nil;
+        self.noteIndex = -1;
+    } 
 }
 
 @end

@@ -25,6 +25,7 @@
 - (IBAction) swipeLeft;
 - (IBAction) swipeRight;
 
+- (void) changeNoteWithTransition:(UIViewAnimationTransition)transition;
 - (void) reloadData;
 
 @end

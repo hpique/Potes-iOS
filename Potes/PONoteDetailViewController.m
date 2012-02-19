@@ -11,12 +11,6 @@
 #import "PONoteDetailBackgroundView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface PONoteDetailViewController (Private)
-
-- (void) changeNoteWithTransition:(UIViewAnimationTransition)transition;
-
-@end
-
 @implementation PONoteDetailViewController
 
 @synthesize allNotes;
@@ -189,7 +183,7 @@
 	self.backgroundView.frame = CGRectMake(self.backgroundView.frame.origin.x, 
                                            self.backgroundView.frame.origin.y, 
                                            newSize.width + 124.0, 
-                                           newSize.height + 480.0);
+                                           newSize.height + 1024);
     [self.backgroundView setNeedsDisplay];
 }
 
@@ -206,7 +200,7 @@
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
 }
 
-#pragma mark - Private
+#pragma mark - Public 
 
 - (void) changeNoteWithTransition:(UIViewAnimationTransition)transition {
     [self.view endEditing:YES];
@@ -218,8 +212,6 @@
     [self reloadData];
     [UIView commitAnimations];
 }
-
-#pragma mark - Public 
 
 - (void) reloadData {
     if (self.note) {

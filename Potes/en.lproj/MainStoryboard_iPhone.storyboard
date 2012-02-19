@@ -67,6 +67,9 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <segue destination="oM9-Zl-523" kind="push" identifier="selectNote" id="V4O-ae-Jhs"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -79,7 +82,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Potes" id="QQm-6A-5vI">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="6bs-19-61T">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="6bs-19-61T">
                             <connections>
                                 <segue destination="oM9-Zl-523" kind="push" identifier="addNote" id="Z1w-rm-8Sv"/>
                             </connections>
@@ -118,7 +121,6 @@
                                 <color key="textColor" red="0.80392156859999997" green="0.46666666670000001" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="oM9-Zl-523" id="ME3-eg-G82"/>
                                 </connections>
@@ -175,4 +177,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="V4O-ae-Jhs"/>
+    </inferredMetricsTieBreakers>
 </document>

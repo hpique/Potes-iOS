@@ -13,6 +13,7 @@
 @interface PONotesListViewController (Private)
 
 - (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue;
+- (void) prepareForSelectNoteSegue:(UIStoryboardSegue*)segue;
 
 @end
 
@@ -58,6 +59,8 @@
 {
     if ([@"addNote" isEqualToString:segue.identifier]) {
         [self prepareForAddNoteSegue:segue];
+    } else if ([@"selectNote" isEqualToString:segue.identifier]) {
+        [self prepareForSelectNoteSegue:segue];
     }
 }
 
@@ -80,7 +83,14 @@
 
 - (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue {
     PONoteDetailViewController* vc = segue.destinationViewController;
-    vc.title = NSLocalizedString(@"New Note", @"");
+    vc.allNotes = self.notes;
+}
+
+- (void) prepareForSelectNoteSegue:(UIStoryboardSegue*)segue {
+    PONoteDetailViewController* vc = segue.destinationViewController;
+    int index = self.tableView.indexPathForSelectedRow.row;
+    vc.note = [self.notes objectAtIndex:index];
+    vc.noteIndex = index;
     vc.allNotes = self.notes;
 }
 

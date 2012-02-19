@@ -44,8 +44,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     if (self.note) {
+        self.title = self.note.title;
+        self.textView.text = self.note.body;
         self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
     } else {
+        self.title = NSLocalizedString(@"New Note", @"");
         [self.textView becomeFirstResponder];
     }
 }

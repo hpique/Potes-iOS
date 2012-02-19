@@ -15,6 +15,7 @@
 - (NSString*) detailTextForNote:(PONote*)note;
 - (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue;
 - (void) prepareForSelectNoteSegue:(UIStoryboardSegue*)segue;
+- (void) setNavigationTitle;
 
 @end
 
@@ -82,6 +83,18 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (editingStyle == UITableViewCellEditingStyleDelete)
+	{
+        PONote* note = [self.notes objectAtIndex:indexPath.row];
+        [PONotesManager deleteNote:note];
+		[self.notes removeObjectAtIndex:indexPath.row];
+		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self setNavigationTitle];
+	}   
+}
+
 #pragma mark - Private
 
 - (NSString*) detailTextForNote:(PONote*)note {
@@ -109,20 +122,25 @@
     vc.allNotes = self.notes;
 }
 
+- (void) setNavigationTitle {
+    if (self.notes.count == 0) {
+        self.title = NSLocalizedString(@"Potes", @"%d");  
+    } else {
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"Potes (%d)", @"%d"), self.notes.count];
+    }  
+}
+
 #pragma mark - Actions
 
 - (IBAction) reloadData {
-    self.notes = [[PONotesManager notes] sortedArrayUsingSelector:self.sortSelector];
+    NSArray* unmutableNotes = [[PONotesManager notes] sortedArrayUsingSelector:self.sortSelector];
+    self.notes = [NSMutableArray arrayWithArray:unmutableNotes];
     
     BOOL empty = self.notes.count == 0;
     self.tableView.hidden = empty;
     self.emptyLabel.hidden = !empty;
 
-    if (empty) {
-        self.title = NSLocalizedString(@"Potes", @"%d");  
-    } else {
-        self.title = [NSString stringWithFormat:NSLocalizedString(@"Potes (%d)", @"%d"), self.notes.count];
-    }
+    [self setNavigationTitle];
     
     [self.tableView reloadData];
 }

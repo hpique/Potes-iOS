@@ -115,7 +115,7 @@
 }
 
 - (NSString*) title {
-    return [self.body stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return [[[self.body stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByString:@"\n"] objectAtIndex:0];
 }
 
 - (NSString*) viewsDescription {

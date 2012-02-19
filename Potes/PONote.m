@@ -94,7 +94,11 @@
 }
 
 - (NSString*) stringFromModificationDate {
-    return [NSDateFormatter localizedStringFromDate:self.modificationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+    NSDateComponents *myDate = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:self.modificationDate];
+    NSDateComponents *todayDate = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+    BOOL today = myDate.day == todayDate.day && myDate.month == todayDate.month && myDate.year == todayDate.year && myDate.era == todayDate.era;
+    
+    return [NSDateFormatter localizedStringFromDate:self.modificationDate dateStyle:today ? NSDateFormatterNoStyle : NSDateFormatterShortStyle timeStyle:today ?NSDateFormatterShortStyle : NSDateFormatterNoStyle];
 }
 
 #pragma mark - Properties

@@ -27,7 +27,6 @@
 @synthesize tableView;
 @synthesize sortSegmentedControl;
 @synthesize emptyLabel;
-@synthesize detailViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,9 +42,6 @@
     [super viewDidLoad];
     
     self.sortSegmentedControl.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:POUserDefaultKeySortSelectedIndex];
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        self.detailViewController = (PONoteDetailViewController*)[[self.splitViewController.viewControllers lastObject] topViewController];
-    }
     [self reloadData];
 }
 
@@ -56,7 +52,6 @@
 
 - (void)viewDidUnload
 {
-    [self setDetailViewController:nil];
     [self setTableView:nil];
     [self setEmptyLabel:nil];
     [self setSortSegmentedControl:nil];
@@ -65,11 +60,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return YES;
-    } else {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    }
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -122,20 +113,6 @@
     }
 }
 
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) return; // iPhone uses segue
-
-    int newIndex = indexPath.row;
-    int currentIndex = self.detailViewController.noteIndex;
-    
-    if (newIndex == currentIndex) return; // Do nothing
-    
-    BOOL forward = currentIndex < newIndex;
-    self.detailViewController.note = [self.notes objectAtIndex:newIndex];
-    self.detailViewController.noteIndex = newIndex;
-    [self.detailViewController changeNoteWithTransition:forward ? UIViewAnimationTransitionCurlUp : UIViewAnimationTransitionCurlDown];
-}
-
 - (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue {
     PONoteDetailViewController* vc = segue.destinationViewController;
     vc.allNotes = self.notes;
@@ -159,7 +136,7 @@
 
 #pragma mark - Actions
 
-- (IBAction) reloadData {
+- (void) reloadData {
     NSArray* unmutableNotes = [[PONotesManager notes] sortedArrayUsingSelector:self.sortSelector];
     self.notes = [NSMutableArray arrayWithArray:unmutableNotes];
     
@@ -168,11 +145,6 @@
     self.emptyLabel.hidden = !empty;
 
     [self setNavigationTitle];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        self.detailViewController.allNotes = self.notes;
-        self.detailViewController.noteIndex = [self.notes indexOfObject:self.detailViewController.note];
-    }
     
     [self.tableView reloadData];
 }

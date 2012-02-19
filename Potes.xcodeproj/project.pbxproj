@@ -16,6 +16,7 @@
 		A0C5583D14F192EE00F09E56 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5583514F192EE00F09E56 /* Icon.png */; };
 		A0C5583E14F192EE00F09E56 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C5583614F192EE00F09E56 /* Icon@2x.png */; };
 		A0C5583F14F192EE00F09E56 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = A0C5583714F192EE00F09E56 /* iTunesArtwork */; };
+		A0C5587C14F1BF8E00F09E56 /* PONotesListViewControlleriPad.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5587B14F1BF8E00F09E56 /* PONotesListViewControlleriPad.m */; };
 		A0C7449514F0EB81009D07BF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C7449414F0EB81009D07BF /* UIKit.framework */; };
 		A0C7449714F0EB81009D07BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C7449614F0EB81009D07BF /* Foundation.framework */; };
 		A0C7449914F0EB81009D07BF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C7449814F0EB81009D07BF /* CoreGraphics.framework */; };
@@ -41,6 +42,8 @@
 		A0C5583514F192EE00F09E56 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		A0C5583614F192EE00F09E56 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		A0C5583714F192EE00F09E56 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		A0C5587A14F1BF8D00F09E56 /* PONotesListViewControlleriPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PONotesListViewControlleriPad.h; sourceTree = "<group>"; };
+		A0C5587B14F1BF8E00F09E56 /* PONotesListViewControlleriPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PONotesListViewControlleriPad.m; sourceTree = "<group>"; };
 		A0C7449014F0EB81009D07BF /* Potes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Potes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C7449414F0EB81009D07BF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A0C7449614F0EB81009D07BF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -116,7 +119,6 @@
 		A0C7449A14F0EB81009D07BF /* Potes */ = {
 			isa = PBXGroup;
 			children = (
-				A0C5582F14F192EE00F09E56 /* Resources */,
 				A0C744A914F0EB82009D07BF /* MainStoryboard_iPad.storyboard */,
 				A0C744A614F0EB82009D07BF /* MainStoryboard_iPhone.storyboard */,
 				A0C744A314F0EB82009D07BF /* POAppDelegate.h */,
@@ -129,8 +131,11 @@
 				A0C5581614F10A0800F09E56 /* PONoteDetailViewController.m */,
 				A0C5581214F109F200F09E56 /* PONotesListViewController.h */,
 				A0C5581314F109F200F09E56 /* PONotesListViewController.m */,
+				A0C5587A14F1BF8D00F09E56 /* PONotesListViewControlleriPad.h */,
+				A0C5587B14F1BF8E00F09E56 /* PONotesListViewControlleriPad.m */,
 				A0C744BE14F0F50B009D07BF /* PONotesManager.h */,
 				A0C744BF14F0F50B009D07BF /* PONotesManager.m */,
+				A0C5582F14F192EE00F09E56 /* Resources */,
 				A0C7449B14F0EB81009D07BF /* Supporting Files */,
 			);
 			path = Potes;
@@ -224,6 +229,7 @@
 				A0C5581414F109F200F09E56 /* PONotesListViewController.m in Sources */,
 				A0C5581714F10A0800F09E56 /* PONoteDetailViewController.m in Sources */,
 				A0C5582E14F176D300F09E56 /* PONoteDetailBackgroundView.m in Sources */,
+				A0C5587C14F1BF8E00F09E56 /* PONotesListViewControlleriPad.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

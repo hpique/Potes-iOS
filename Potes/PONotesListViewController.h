@@ -15,11 +15,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *emptyLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sortSegmentedControl;
-@property (strong, nonatomic) PONoteDetailViewController* detailViewController;
 
 @property (readonly) SEL sortSelector;
 
-- (IBAction) reloadData;
+- (void) reloadData;
 - (IBAction) sortSegmentedControlValueChanged;
 
 @end

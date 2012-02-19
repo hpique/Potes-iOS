@@ -23,7 +23,7 @@
         <scene sceneID="VVj-dN-YkR">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fW-eZ-fZx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="6o3-Qw-MCK" customClass="PONotesListViewController" sceneMemberID="viewController">
+                <viewController id="6o3-Qw-MCK" customClass="PONotesListViewControlleriPad" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B3k-oi-rBW">
                         <rect key="frame" x="0.0" y="64" width="320" height="704"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -61,11 +61,11 @@
                                     <color key="backgroundColor" red="0.97030943629999999" green="0.91173017020000002" blue="0.93871593480000004" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Note" textLabel="50R-Qk-7bJ" detailTextLabel="VjP-Ki-fiF" style="IBUITableViewCellStyleValue1" id="SJC-z4-k9V">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="Note" textLabel="50R-Qk-7bJ" detailTextLabel="VjP-Ki-fiF" style="IBUITableViewCellStyleValue1" id="SJC-z4-k9V">
                                         <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="50R-Qk-7bJ">
@@ -76,7 +76,7 @@
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VjP-Ki-fiF">
-                                                    <rect key="frame" x="254" y="13" width="36" height="18"/>
+                                                    <rect key="frame" x="274" y="13" width="36" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -224,12 +224,14 @@
         <class className="PONotesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PONotesListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="reloadData"/>
                 <relationship kind="action" name="sortSegmentedControlValueChanged"/>
                 <relationship kind="outlet" name="emptyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="sortSegmentedControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
+        </class>
+        <class className="PONotesListViewControlleriPad" superclassName="PONotesListViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PONotesListViewControlleriPad.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -46,6 +46,7 @@
     if (self.note) {
         self.title = self.note.title;
         self.textView.text = self.note.body;
+        self.note.views++;
         self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
     } else {
         self.title = NSLocalizedString(@"New Note", @"");
@@ -66,13 +67,10 @@
     [self setDoneBarButtonItem:nil];
     [self setAddBarButtonItem:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -131,6 +129,7 @@
 - (void)textViewDidChange:(UITextView *)textView {
     if (!self.note) {
         self.note = [PONote note];
+        self.note.views++;
         [PONotesManager addNote:self.note];
     } else {
         self.note.modificationDate = [NSDate date];

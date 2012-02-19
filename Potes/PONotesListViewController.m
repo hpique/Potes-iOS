@@ -12,6 +12,7 @@
 
 @interface PONotesListViewController (Private)
 
+- (NSString*) detailTextForNote:(PONote*)note;
 - (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue;
 - (void) prepareForSelectNoteSegue:(UIStoryboardSegue*)segue;
 
@@ -21,6 +22,7 @@
 
 @synthesize notes;
 @synthesize tableView;
+@synthesize sortSegmentedControl;
 @synthesize emptyLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -47,6 +49,7 @@
 {
     [self setTableView:nil];
     [self setEmptyLabel:nil];
+    [self setSortSegmentedControl:nil];
     [super viewDidUnload];
 }
 
@@ -75,11 +78,23 @@
 	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Note"];
     PONote* note = [self.notes objectAtIndex:indexPath.row];
     cell.textLabel.text = note.title;
-    cell.detailTextLabel.text = note.modificationDateDescription;
+    cell.detailTextLabel.text = [self detailTextForNote:note];
     return cell;
 }
 
 #pragma mark - Private
+
+- (NSString*) detailTextForNote:(PONote*)note {
+    int sortIndex = self.sortSegmentedControl.selectedSegmentIndex;
+    switch (sortIndex) {
+        case 0:
+            return [note stringFromModificationDate];
+        case 1:
+            return note.freshnessDescription;
+        default:
+            return note.viewsDescription;
+    }
+}
 
 - (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue {
     PONoteDetailViewController* vc = segue.destinationViewController;
@@ -94,14 +109,36 @@
     vc.allNotes = self.notes;
 }
 
-#pragma mark - Public
+#pragma mark - Actions
 
-- (void) reloadData {
-    self.notes = [PONotesManager notes];
+- (IBAction) reloadData {
+    self.notes = [[PONotesManager notes] sortedArrayUsingSelector:self.sortSelector];
+    
     BOOL empty = self.notes.count == 0;
     self.tableView.hidden = empty;
     self.emptyLabel.hidden = !empty;
+
+    if (empty) {
+        self.title = NSLocalizedString(@"Potes", @"%d");  
+    } else {
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"Potes (%d)", @"%d"), self.notes.count];
+    }
+    
     [self.tableView reloadData];
+}
+
+#pragma mark - Properties
+
+- (SEL) sortSelector {
+    int sortIndex = self.sortSegmentedControl.selectedSegmentIndex;
+    switch (sortIndex) {
+        case 0:
+            return @selector(compareByTitle:);
+        case 1:
+            return @selector(compareByModificationDateDescending:);
+        default:
+            return @selector(compareByViewsDescending:);
+    }
 }
 
 @end

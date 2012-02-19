@@ -16,8 +16,13 @@ static NSMutableDictionary* notes_;
 
 + (NSArray*) notes {
     if (!notes_) {
-        NSDictionary* notes = [[NSUserDefaults standardUserDefaults] dictionaryForKey:PONotesManagerUserDefaultsKeyNotes];
-        notes_ = [NSMutableDictionary dictionaryWithDictionary:notes];
+        NSData* data = [[NSUserDefaults standardUserDefaults] objectForKey:PONotesManagerUserDefaultsKeyNotes];
+        if (data) {
+            NSDictionary* notes = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            notes_ = [NSMutableDictionary dictionaryWithDictionary:notes];
+        } else {
+            notes_ = [NSMutableDictionary dictionary];
+        }
     }
     return [notes_ allValues];
 }
@@ -33,7 +38,9 @@ static NSMutableDictionary* notes_;
 }
 
 + (void) update {
-    [[NSUserDefaults standardUserDefaults] setObject:notes_ forKey:PONotesManagerUserDefaultsKeyNotes];
+    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:notes_];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:PONotesManagerUserDefaultsKeyNotes];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

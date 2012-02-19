@@ -12,15 +12,20 @@
 
 @property (strong, nonatomic) NSString* body;
 @property (strong, nonatomic) NSDate* creationDate;
+@property (readonly) NSString* freshnessDescription;
 @property (strong, nonatomic) NSDate* modificationDate;
-@property (readonly) NSString* modificationDateDescription;
 @property (strong, nonatomic) NSString* noteId;
 @property (readonly) NSString* title;
+@property (nonatomic) NSInteger views;
+@property (readonly) NSString* viewsDescription;
 
 + (PONote*) note;
 
-- (NSComparisonResult)compareBody:(PONote*)note;
-- (NSComparisonResult)compareModificationDate:(PONote*)note;
+- (NSComparisonResult)compareByTitle:(PONote*)note;
+- (NSComparisonResult)compareByModificationDateDescending:(PONote*)note;
+- (NSComparisonResult)compareByViewsDescending:(PONote*)note;
+
+- (NSString*) stringFromModificationDate;
 
 
 @end

@@ -13,7 +13,10 @@
 @property (strong, nonatomic) NSArray* notes;
 @property (weak, nonatomic) IBOutlet UILabel *emptyLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortSegmentedControl;
 
-- (void) reloadData;
+@property (readonly) SEL sortSelector;
+
+- (IBAction) reloadData;
 
 @end

@@ -12,6 +12,7 @@
 #define PONoteCodeKeyCreationDate @"creationDate"
 #define PONoteCodeKeyModificationDate @"modificationDate"
 #define PONoteCodeKeyNoteId @"noteId"
+#define PONoteCodeKeyViews @"views"
 
 @implementation PONote
 
@@ -19,6 +20,7 @@
 @synthesize creationDate;
 @synthesize modificationDate;
 @synthesize noteId;
+@synthesize views;
 
 - (id) init {
     self = [super init];
@@ -42,6 +44,7 @@
     [aCoder encodeObject:self.creationDate forKey:PONoteCodeKeyCreationDate];
     [aCoder encodeObject:self.modificationDate forKey:PONoteCodeKeyModificationDate];
     [aCoder encodeObject:self.noteId forKey:PONoteCodeKeyNoteId];
+    [aCoder encodeInteger:self.views forKey:PONoteCodeKeyViews];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -51,6 +54,7 @@
         self.creationDate = [aDecoder decodeObjectForKey:PONoteCodeKeyCreationDate];
         self.modificationDate = [aDecoder decodeObjectForKey:PONoteCodeKeyModificationDate];
         self.noteId = [aDecoder decodeObjectForKey:PONoteCodeKeyNoteId];
+        self.views = [aDecoder decodeIntegerForKey:PONoteCodeKeyViews];
     }
     return self;
 }
@@ -63,22 +67,39 @@
     note.creationDate = [self.creationDate copy];
     note.modificationDate = [self.modificationDate copy];
     note.noteId = [self.noteId copy];
+    note.views = self.views;
     return note;
 }
 
 #pragma mark - Public
 
-- (NSComparisonResult)compareBody:(PONote*)note {
-    return [self.body compare:note.body];
+- (NSComparisonResult)compareByTitle:(PONote*)note {
+    NSComparisonResult comparison = [self.title compare:note.title];
+    if (comparison == NSOrderedSame) {
+        return [self.modificationDate compare:note.modificationDate] * -1;
+    }
+    return comparison;
 }
 
-- (NSComparisonResult)compareModificationDate:(PONote*)note {
-    return [self.modificationDate compare:note.modificationDate];
+- (NSComparisonResult)compareByModificationDateDescending:(PONote*)note {
+    return [self.modificationDate compare:note.modificationDate] * -1;
+}
+
+- (NSComparisonResult)compareByViewsDescending:(PONote*)note {
+    if (self.views == note.views) {
+        return [self compareByTitle:note];
+    } else {
+        return self.views > note.views ? -1 : 1;
+    }
+}
+
+- (NSString*) stringFromModificationDate {
+    return [NSDateFormatter localizedStringFromDate:self.modificationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 }
 
 #pragma mark - Properties
 
-- (NSString*) modificationDateDescription {
+- (NSString*) freshnessDescription {
     NSTimeInterval interval = -[self.modificationDate timeIntervalSinceNow];
     if (interval < 60) {
         return [NSString stringWithFormat:NSLocalizedString(@"%.0lfs ago", @""), interval];
@@ -92,8 +113,17 @@
         return NSLocalizedString(@"a while ago", @"");
     }
 }
+
 - (NSString*) title {
     return [self.body stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
+- (NSString*) viewsDescription {
+    if (self.views == 1) {
+        return [NSString stringWithFormat:NSLocalizedString(@"%d view", @""), self.views];
+    } else {
+        return [NSString stringWithFormat:NSLocalizedString(@"%d views", @""), self.views];
+    }
 }
 
 @end

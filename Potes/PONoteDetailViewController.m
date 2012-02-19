@@ -83,6 +83,7 @@
 
 - (IBAction) addButtonPressed {
     self.note = nil;
+    self.noteIndex = -1;
     [self changeNoteWithTransition:UIViewAnimationTransitionCurlUp];
 }
 
@@ -183,7 +184,7 @@
 	self.backgroundView.frame = CGRectMake(self.backgroundView.frame.origin.x, 
                                            self.backgroundView.frame.origin.y, 
                                            newSize.width + 124.0, 
-                                           newSize.height + 1024);
+                                           newSize.height + UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 1024 : 480);
     [self.backgroundView setNeedsDisplay];
 }
 

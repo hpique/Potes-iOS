@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PONote.h"
 
 @interface PONotesManager : NSObject
+
++ (NSArray*) notes;
+
++ (void) addNote:(PONote*)note;
+
++ (void) deleteNote:(PONote*)note;
+
++ (void) update;
 
 @end

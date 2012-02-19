@@ -7,54 +7,90 @@
 //
 
 #import "PONotesListViewController.h"
+#import "PONotesManager.h"
+#import "PONoteDetailViewController.h"
+
+@interface PONotesListViewController (Private)
+
+- (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue;
+
+@end
 
 @implementation PONotesListViewController
+
+@synthesize notes;
+@synthesize tableView;
+@synthesize emptyLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void) viewDidLoad {
     [super viewDidLoad];
+    [self reloadData];
 }
-*/
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self reloadData];
+}
 
 - (void)viewDidUnload
 {
+    [self setTableView:nil];
+    [self setEmptyLabel:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([@"addNote" isEqualToString:segue.identifier]) {
+        [self prepareForAddNoteSegue:segue];
+    }
+}
+
+# pragma mark - Table View 
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.notes.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Note"];
+    PONote* note = [self.notes objectAtIndex:indexPath.row];
+    cell.textLabel.text = note.body;
+    return cell;
+}
+
+#pragma mark - Private
+
+- (void) prepareForAddNoteSegue:(UIStoryboardSegue*)segue {
+    PONoteDetailViewController* vc = segue.destinationViewController;
+    vc.title = NSLocalizedString(@"New Note", @"");
+    vc.allNotes = self.notes;
+}
+
+#pragma mark - Public
+
+- (void) reloadData {
+    self.notes = [PONotesManager notes];
+    BOOL empty = self.notes.count == 0;
+    self.tableView.hidden = empty;
+    self.emptyLabel.hidden = !empty;
+    [self.tableView reloadData];
 }
 
 @end

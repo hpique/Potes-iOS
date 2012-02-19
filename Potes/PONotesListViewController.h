@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PONotesListViewController : UIViewController
+@interface PONotesListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) NSArray* notes;
+@property (weak, nonatomic) IBOutlet UILabel *emptyLabel;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+- (void) reloadData;
 
 @end

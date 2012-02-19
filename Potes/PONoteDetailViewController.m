@@ -7,8 +7,14 @@
 //
 
 #import "PONoteDetailViewController.h"
+#import "PONotesManager.h"
 
 @implementation PONoteDetailViewController
+
+@synthesize allNotes;
+@synthesize note;
+@synthesize noteIndex;
+@synthesize textView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,23 +35,16 @@
 
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
+- (void) viewWillDisappear:(BOOL)animated {
+    self.note = [PONote note];
+    self.note.body = self.textView.text;
+    [PONotesManager addNote:self.note];
+    [super viewWillDisappear:animated];
 }
-*/
-
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-*/
 
 - (void)viewDidUnload
 {
+    [self setTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -56,5 +55,20 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+#pragma mark - Actions
+
+- (IBAction) addButtonPressed {
+    
+}
+
+- (IBAction) swipeLeft {
+    
+}
+
+- (IBAction) swipeRight {
+    
+}
+
 
 @end

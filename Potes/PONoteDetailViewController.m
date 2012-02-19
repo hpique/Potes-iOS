@@ -8,6 +8,8 @@
 
 #import "PONoteDetailViewController.h"
 #import "PONotesManager.h"
+#import "PONoteDetailBackgroundView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface PONoteDetailViewController (Private)
 
@@ -23,6 +25,7 @@
 @synthesize textView;
 @synthesize doneBarButtonItem;
 @synthesize addBarButtonItem;
+@synthesize backgroundView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,7 +42,12 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self.textView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     
+    self.backgroundView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.backgroundView.layer.shadowOpacity = 0.1;
+    self.backgroundView.layer.shadowRadius = 2;
+
     if (!self.note) {
         [self.textView becomeFirstResponder];
     }
@@ -60,7 +68,12 @@
     [self setTextView:nil];
     [self setDoneBarButtonItem:nil];
     [self setAddBarButtonItem:nil];
+    [self setBackgroundView:nil];
     [super viewDidUnload];
+}
+
+- (void) dealloc {
+    [self.textView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -137,6 +150,11 @@
 
 #pragma mark - UITextViewDelegate
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	float yOffset = scrollView.contentOffset.y;
+	self.backgroundView.transform = CGAffineTransformMakeTranslation(0, -yOffset - self.textView.contentInset.top);
+}
+
 - (void)textViewDidBeginEditing:(UITextView *)aTextView {
 	self.navigationItem.rightBarButtonItem = self.doneBarButtonItem;
 }
@@ -157,6 +175,18 @@
 - (void)textViewDidEndEditing:(UITextView *)aTextView {
     [PONotesManager update];
     self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
+}
+
+#pragma mark - KVO
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	CGSize newSize = [[change objectForKey:@"new"] CGSizeValue];
+	self.backgroundView.frame = CGRectMake(self.backgroundView.frame.origin.x, 
+                                           self.backgroundView.frame.origin.y, 
+                                           self.backgroundView.frame.size.width + 124.0, 
+                                           self.backgroundView.frame.size.height + 480.0);
+    [self.backgroundView setNeedsDisplay];
 }
 
 #pragma mark - Private

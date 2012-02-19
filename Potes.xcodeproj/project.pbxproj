@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A0C5581414F109F200F09E56 /* PONotesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5581314F109F200F09E56 /* PONotesListViewController.m */; };
 		A0C5581714F10A0800F09E56 /* PONoteDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5581614F10A0800F09E56 /* PONoteDetailViewController.m */; };
+		A0C5582E14F176D300F09E56 /* PONoteDetailBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5582D14F176D300F09E56 /* PONoteDetailBackgroundView.m */; };
 		A0C7449514F0EB81009D07BF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C7449414F0EB81009D07BF /* UIKit.framework */; };
 		A0C7449714F0EB81009D07BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C7449614F0EB81009D07BF /* Foundation.framework */; };
 		A0C7449914F0EB81009D07BF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C7449814F0EB81009D07BF /* CoreGraphics.framework */; };
@@ -26,6 +27,8 @@
 		A0C5581314F109F200F09E56 /* PONotesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PONotesListViewController.m; sourceTree = "<group>"; };
 		A0C5581514F10A0800F09E56 /* PONoteDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PONoteDetailViewController.h; sourceTree = "<group>"; };
 		A0C5581614F10A0800F09E56 /* PONoteDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PONoteDetailViewController.m; sourceTree = "<group>"; };
+		A0C5582C14F176D300F09E56 /* PONoteDetailBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PONoteDetailBackgroundView.h; sourceTree = "<group>"; };
+		A0C5582D14F176D300F09E56 /* PONoteDetailBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PONoteDetailBackgroundView.m; sourceTree = "<group>"; };
 		A0C7449014F0EB81009D07BF /* Potes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Potes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C7449414F0EB81009D07BF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A0C7449614F0EB81009D07BF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -94,6 +97,8 @@
 				A0C744A414F0EB82009D07BF /* POAppDelegate.m */,
 				A0C744BB14F0F18A009D07BF /* PONote.h */,
 				A0C744BC14F0F18A009D07BF /* PONote.m */,
+				A0C5582C14F176D300F09E56 /* PONoteDetailBackgroundView.h */,
+				A0C5582D14F176D300F09E56 /* PONoteDetailBackgroundView.m */,
 				A0C5581514F10A0800F09E56 /* PONoteDetailViewController.h */,
 				A0C5581614F10A0800F09E56 /* PONoteDetailViewController.m */,
 				A0C5581214F109F200F09E56 /* PONotesListViewController.h */,
@@ -186,6 +191,7 @@
 				A0C744C014F0F50B009D07BF /* PONotesManager.m in Sources */,
 				A0C5581414F109F200F09E56 /* PONotesListViewController.m in Sources */,
 				A0C5581714F10A0800F09E56 /* PONoteDetailViewController.m in Sources */,
+				A0C5582E14F176D300F09E56 /* PONoteDetailBackgroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 @class PONote;
+@class PONoteDetailBackgroundView;
 
-@interface PONoteDetailViewController : UIViewController<UITextViewDelegate>
+@interface PONoteDetailViewController : UIViewController<UITextViewDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSArray* allNotes;
 @property (strong, nonatomic) PONote* note;
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
+@property (weak, nonatomic) IBOutlet PONoteDetailBackgroundView *backgroundView;
 
 - (IBAction) addButtonPressed;
 - (IBAction) doneButtonPressed;

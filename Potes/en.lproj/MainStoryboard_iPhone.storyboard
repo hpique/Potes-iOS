@@ -135,10 +135,15 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="cWh-Mp-GDc">
+                            <view contentMode="scaleToFill" id="OlR-Bh-O2Y" customClass="PONoteDetailBackgroundView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.87058823529999996" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" id="cWh-Mp-GDc">
                                 <rect key="frame" x="20" y="0.0" width="280" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.94901960780000005" green="0.87058823529999996" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
                                 <color key="textColor" red="0.80392156859999997" green="0.46666666670000001" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -148,7 +153,7 @@
                                 </connections>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.94901960780000005" green="0.87058823529999996" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.97030943632125854" green="0.91173017024993896" blue="0.93871593475341797" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="vVW-bK-pjC" appends="YES" id="S0h-i5-Wlq"/>
@@ -164,6 +169,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButtonItem" destination="F3t-kC-ZLq" id="xop-e8-0Cs"/>
+                        <outlet property="backgroundView" destination="OlR-Bh-O2Y" id="G1z-Lx-J8u"/>
                         <outlet property="doneBarButtonItem" destination="mBq-SR-r8Q" id="HUf-FH-b5G"/>
                         <outlet property="textView" destination="cWh-Mp-GDc" id="9oC-Kz-tO6"/>
                     </connections>
@@ -188,6 +194,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="PONoteDetailBackgroundView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PONoteDetailBackgroundView.h"/>
+        </class>
         <class className="PONoteDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PONoteDetailViewController.h"/>
             <relationships>
@@ -196,6 +205,7 @@
                 <relationship kind="action" name="swipeLeft"/>
                 <relationship kind="action" name="swipeRight"/>
                 <relationship kind="outlet" name="addBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="backgroundView" candidateClass="PONoteDetailBackgroundView"/>
                 <relationship kind="outlet" name="doneBarButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
             </relationships>

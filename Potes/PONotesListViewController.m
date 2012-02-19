@@ -71,7 +71,8 @@
 {
 	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Note"];
     PONote* note = [self.notes objectAtIndex:indexPath.row];
-    cell.textLabel.text = note.body;
+    cell.textLabel.text = note.title;
+    cell.detailTextLabel.text = note.modificationDateDescription;
     return cell;
 }
 

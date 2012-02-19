@@ -112,13 +112,16 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="cWh-Mp-GDc">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <rect key="frame" x="20" y="0.0" width="280" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.87058823529999996" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.80392156859999997" green="0.46666666670000001" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="oM9-Zl-523" id="ME3-eg-G82"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960780000005" green="0.87058823529999996" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -128,15 +131,21 @@
                             <outletCollection property="gestureRecognizers" destination="5gA-Hv-iAe" appends="YES" id="hsk-Um-lrO"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="cwp-Wy-vBZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="F3t-kC-ZLq"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cwp-Wy-vBZ"/>
                     <connections>
+                        <outlet property="addBarButtonItem" destination="F3t-kC-ZLq" id="xop-e8-0Cs"/>
+                        <outlet property="doneBarButtonItem" destination="mBq-SR-r8Q" id="HUf-FH-b5G"/>
                         <outlet property="textView" destination="cWh-Mp-GDc" id="9oC-Kz-tO6"/>
                     </connections>
                 </viewController>
                 <swipeGestureRecognizer direction="right" id="5gA-Hv-iAe"/>
                 <swipeGestureRecognizer direction="left" id="QZQ-wP-kra"/>
+                <barButtonItem systemItem="done" id="mBq-SR-r8Q">
+                    <connections>
+                        <action selector="doneButtonPressed" destination="oM9-Zl-523" id="ove-8P-ZZM"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem systemItem="add" id="F3t-kC-ZLq"/>
             </objects>
             <point key="canvasLocation" x="868" y="64"/>
         </scene>
@@ -145,9 +154,11 @@
         <class className="PONoteDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PONoteDetailViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addButtonPressed"/>
+                <relationship kind="action" name="doneButtonPressed"/>
                 <relationship kind="action" name="swipeLeft"/>
                 <relationship kind="action" name="swipeRight"/>
+                <relationship kind="outlet" name="addBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="doneBarButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
             </relationships>
         </class>

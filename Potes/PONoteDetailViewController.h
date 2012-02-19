@@ -9,14 +9,16 @@
 #import <UIKit/UIKit.h>
 @class PONote;
 
-@interface PONoteDetailViewController : UIViewController
+@interface PONoteDetailViewController : UIViewController<UITextViewDelegate>
 
 @property (strong, nonatomic) NSArray* allNotes;
 @property (strong, nonatomic) PONote* note;
 @property (nonatomic) int noteIndex;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 
-- (IBAction) addButtonPressed;
+- (IBAction) doneButtonPressed;
 - (IBAction) swipeLeft;
 - (IBAction) swipeRight;
 

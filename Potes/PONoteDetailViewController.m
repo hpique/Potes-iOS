@@ -15,6 +15,8 @@
 @synthesize note;
 @synthesize noteIndex;
 @synthesize textView;
+@synthesize doneBarButtonItem;
+@synthesize addBarButtonItem;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,16 +37,31 @@
 
 #pragma mark - View lifecycle
 
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    if (self.note) {
+        self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
+    } else {
+        [self.textView becomeFirstResponder];
+    }
+}
+
 - (void) viewWillDisappear:(BOOL)animated {
-    self.note = [PONote note];
-    self.note.body = self.textView.text;
-    [PONotesManager addNote:self.note];
+    if (self.note && self.note.title.length == 0) {
+        [PONotesManager deleteNote:self.note];
+    }
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload
 {
     [self setTextView:nil];
+    [self setDoneBarButtonItem:nil];
+    [self setAddBarButtonItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -58,8 +75,8 @@
 
 #pragma mark - Actions
 
-- (IBAction) addButtonPressed {
-    
+- (IBAction) doneButtonPressed {
+    [self.view endEditing:YES];
 }
 
 - (IBAction) swipeLeft {
@@ -70,5 +87,58 @@
     
 }
 
+- (void) keyboardWillShow:(NSNotification*)aNotification{
+    NSDictionary* userInfo = [aNotification userInfo];
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    CGRect keyboardFrame;
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[userInfo objectForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardFrame];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:animationCurve];
+    [self.textView setFrame:CGRectMake(self.textView.frame.origin.x, self.textView.frame.origin.y,
+                                       self.textView.frame.size.width, self.textView.frame.size.height - keyboardFrame.size.height + 5.0)];
+    [UIView commitAnimations];
+}
+
+- (void) keyboardWillHide:(NSNotification*)aNotification{
+    NSDictionary* userInfo = [aNotification userInfo];
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    CGRect keyboardFrame;
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[userInfo objectForKey:UIKeyboardBoundsUserInfoKey] getValue:&keyboardFrame];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:animationCurve];
+    [self.textView setFrame:CGRectMake(self.textView.frame.origin.x, self.textView.frame.origin.y,
+                                       self.textView.frame.size.width, self.textView.frame.size.height + keyboardFrame.size.height - 5.0)];
+    [UIView commitAnimations];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidBeginEditing:(UITextView *)aTextView {
+	self.navigationItem.rightBarButtonItem = self.doneBarButtonItem;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    if (!self.note) {
+        self.note = [PONote note];
+        [PONotesManager addNote:self.note];
+    } else {
+        self.note.modificationDate = [NSDate date];
+    }
+    self.note.body = self.textView.text;
+    self.title = self.note.title;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)aTextView {
+    [PONotesManager update];
+    self.navigationItem.rightBarButtonItem = self.addBarButtonItem;
+}
 
 @end

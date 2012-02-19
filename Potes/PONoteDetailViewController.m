@@ -184,14 +184,15 @@
 	CGSize newSize = [[change objectForKey:@"new"] CGSizeValue];
 	self.backgroundView.frame = CGRectMake(self.backgroundView.frame.origin.x, 
                                            self.backgroundView.frame.origin.y, 
-                                           self.backgroundView.frame.size.width + 124.0, 
-                                           self.backgroundView.frame.size.height + 480.0);
+                                           newSize.width + 124.0, 
+                                           newSize.height + 480.0);
     [self.backgroundView setNeedsDisplay];
 }
 
 #pragma mark - Private
 
 - (void) changeNoteWithTransition:(UIViewAnimationTransition)transition {
+    [self.view endEditing:YES];
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0];
     [UIView setAnimationTransition:transition forView:self.view cache:YES];

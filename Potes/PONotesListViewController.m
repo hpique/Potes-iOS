@@ -10,6 +10,8 @@
 #import "PONotesManager.h"
 #import "PONoteDetailViewController.h"
 
+#define POUserDefaultKeySortSelectedIndex @"SortSelectedIndex"
+
 @interface PONotesListViewController (Private)
 
 - (NSString*) detailTextForNote:(PONote*)note;
@@ -38,6 +40,9 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    
+    self.sortSegmentedControl.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:POUserDefaultKeySortSelectedIndex];
+    
     [self reloadData];
 }
 
@@ -143,6 +148,12 @@
     [self setNavigationTitle];
     
     [self.tableView reloadData];
+}
+
+- (IBAction) sortSegmentedControlValueChanged {
+    [[NSUserDefaults standardUserDefaults] setInteger:self.sortSegmentedControl.selectedSegmentIndex forKey:POUserDefaultKeySortSelectedIndex];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self reloadData];
 }
 
 #pragma mark - Properties

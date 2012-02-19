@@ -18,5 +18,6 @@
 @property (readonly) SEL sortSelector;
 
 - (IBAction) reloadData;
+- (IBAction) sortSegmentedControlValueChanged;
 
 @end

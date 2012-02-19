@@ -55,7 +55,7 @@
                                             </segments>
                                             <color key="tintColor" red="0.96078431369999995" green="0.66666666669999997" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <action selector="reloadData" destination="4Ch-Y0-rjw" eventType="valueChanged" id="oE6-P6-MUy"/>
+                                                <action selector="sortSegmentedControlValueChanged" destination="4Ch-Y0-rjw" eventType="valueChanged" id="vzf-yu-2D0"/>
                                             </connections>
                                         </segmentedControl>
                                     </subviews>
@@ -214,6 +214,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PONotesListViewController.h"/>
             <relationships>
                 <relationship kind="action" name="reloadData"/>
+                <relationship kind="action" name="sortSegmentedControlValueChanged"/>
                 <relationship kind="outlet" name="emptyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="sortSegmentedControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>

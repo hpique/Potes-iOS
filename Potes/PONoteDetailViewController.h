@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *doneBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet PONoteDetailBackgroundView *backgroundView;
+@property (weak, nonatomic) IBOutlet UILabel *freshnessLabel;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 
 - (IBAction) addButtonPressed;
 - (IBAction) doneButtonPressed;

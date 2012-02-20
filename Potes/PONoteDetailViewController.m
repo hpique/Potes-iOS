@@ -20,6 +20,8 @@
 @synthesize doneBarButtonItem;
 @synthesize addBarButtonItem;
 @synthesize backgroundView;
+@synthesize freshnessLabel;
+@synthesize dateLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,7 +43,12 @@
     self.backgroundView.layer.shadowColor = [UIColor blackColor].CGColor;
     self.backgroundView.layer.shadowOpacity = 0.1;
     self.backgroundView.layer.shadowRadius = 2;
-
+    
+    self.freshnessLabel.frame = CGRectMake(8, -25, self.freshnessLabel.frame.size.width, self.freshnessLabel.frame.size.height);
+    [self.textView addSubview:self.freshnessLabel];
+    self.dateLabel.frame = CGRectMake(self.textView.frame.size.width -100, -25, self.dateLabel.frame.size.width, self.dateLabel.frame.size.height);
+    [self.textView addSubview:self.dateLabel];
+    
     if (!self.note) {
         [self.textView becomeFirstResponder];
     }
@@ -63,6 +70,8 @@
     [self setDoneBarButtonItem:nil];
     [self setAddBarButtonItem:nil];
     [self setBackgroundView:nil];
+    [self setFreshnessLabel:nil];
+    [self setDateLabel:nil];
     [super viewDidUnload];
 }
 
@@ -219,6 +228,8 @@
         self.title = self.note.title;
         self.textView.text = self.note.body;
         self.note.views++;
+        self.freshnessLabel.text = self.note.freshnessDescription;
+        self.dateLabel.text = [self.note stringFromModificationDate];
     } else {
         self.title = NSLocalizedString(@"New Note", @"");
         self.textView.text = nil;

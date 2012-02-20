@@ -8,7 +8,7 @@
 
 #import "PONoteDetailBackgroundView.h"
 
-NSInteger const kPONoteDetailBackgroundViewMarginTop = 42;
+NSInteger const kPONoteDetailBackgroundViewMarginTop = 62;
 
 #define PONoteDetailBackgroundViewLineHeight 23
 
